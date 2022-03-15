@@ -9,6 +9,16 @@ package mr
 import "os"
 import "strconv"
 
+
+type TaskType int
+
+const (
+	maptask TaskType = iota
+	reducetask
+	finished
+	try_again_later
+)
+
 //
 // example to show how to declare the arguments
 // and reply for an RPC.
@@ -20,6 +30,26 @@ type ExampleArgs struct {
 
 type ExampleReply struct {
 	Y int
+}
+
+type RequestTaskArgs struct{
+}
+
+type RequestTaskReply struct{
+	NReduce int
+	NMap int
+	MapTaskNumber int
+	ReduceTaskNumber int
+	Task TaskType
+	Filename string
+}
+
+type FinishedTaskArgs struct {
+	Task TaskType
+	TaskNumber int
+}
+
+type FinishedTaskReply struct {
 }
 
 // Add your RPC definitions here.
