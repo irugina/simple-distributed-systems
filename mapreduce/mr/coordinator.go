@@ -45,7 +45,7 @@ func (c *Coordinator) RequestTask(args *RequestTaskArgs, reply *RequestTaskReply
 	// lock coordinator
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	c.checkForCrushes()
+	c.checkForCrashes()
 	// set some general attributes for reply
 	reply.NReduce = c.nReduce
 	reply.NMap = c.nMap
@@ -121,7 +121,7 @@ func (c *Coordinator) server() {
 	go http.Serve(l, nil)
 }
 
-func (c *Coordinator) checkForCrushes() {
+func (c *Coordinator) checkForCrashes() {
 	for task_idx, task_runtime := range c.map_tasks_runtime{
                 if time.Since(task_runtime).Seconds() > 10 && c.map_tasks_status[task_idx] == in_progress  {
                         c.map_tasks_status[task_idx] = idle
